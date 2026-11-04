@@ -119,3 +119,17 @@ phần nội dung bên dưới sẽ bỏ hết và thay bằng nội dung dướ
 Chúc mừng Boy’s Day các anh em! Cảm ơn mọi người vì luôn là những cộng sự tuyệt vời, nhiệt tình hỗ trợ chị em cả trong học tập lẫn công việc. Dù ai cũng bận rộn với công việc riêng, anh em vẫn luôn ga lăng, xông xáo gánh vác việc chung và giữ cho không khí lớp mình luôn vui vẻ, thoải mái. Chúc các chàng trai lớp mình luôn giữ vững phong độ, sức khỏe dồi dào, công việc thăng tiến và luôn đạt được những mục tiêu lớn của bản thân. Chúc anh em có một ngày Boy’s Day thật trọn vẹn và luôn tràn đầy năng lượng!
 
 Tạo thêm slide 14: background và effect như các slide trước nhưng nội dung ghi là "Happy Boy Days!" thật to  
+
+
+
+Update ver 2.0:
+Những phần nội dung như best remote, best height, best OT, best photographer, best alcohol, best brother, best chill, Iconic brain, Best EXP thì font chữ to hơn tuy nhiên không to hơn font chữ của tên, làm sao 3 mục tên giải thưởng, họ và tên , nội dung phụ có khoảng  cách đều nhau
+
+Ảnh của thầy bỏ đi hết, để tên thầy to và chính giữa, cho chữ iconic brain to lên, tìm emoji hình mũ cử nhân cho vào để đỡ trống (áp dụng cho cả 2 thầy)
+
+Phần golden king với vương miện trong slide 12 , golden king đang có 2 chữ thì bỏ chữ ở trên thay bằng vương miện, chỉ giữ chữ golden king ở dưới, bên cạnh đó trong phần chuyển đổi giữ slide 11 và slide 12 phong thư lúc mở bị che mất chữ golden king, hãy dịch phong thư xuống để đến lúc mở không bị che mất chữ
+Slide cuỗi sẽ tự bắn pháo hoa liên tục trong 2p
+
+Mục class = hud top-right hãy thiết kế làm sao thu gọn lại đừng hiển thị rõ tại màn hình như thế, hãy làm cho nó thu gọn trong 1 button, ấn button đó mới mở ra toàn bộ item trong hud top-right
+
+hãy thêm file nhạc mới vào slide 

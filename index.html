@@ -44,56 +44,69 @@
     }
     .bg {
       position: absolute; inset: 0; z-index: 0;
-      background: linear-gradient(135deg, #12060b, #1a0a08 30%, #0b1220 70%, #14080e);
-      background-size: 400% 400%;
-      animation: bgShift 18s ease infinite;
+      background: radial-gradient(circle at 20% 30%, #200810 0%, #10060d 50%, #07050a 100%);
+      transform: translateZ(0);
     }
-    @keyframes bgShift {
-      0% { background-position: 0% 40%; }
-      50% { background-position: 100% 60%; }
-      100% { background-position: 0% 40%; }
+    .bg::before {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 70%, #160e28 0%, #081018 45%, transparent 70%);
+      opacity: 0.65;
+      animation: bgPulse 12s ease-in-out infinite alternate;
+      will-change: opacity;
+    }
+    @keyframes bgPulse {
+      0% { opacity: 0.4; }
+      100% { opacity: 0.85; }
     }
     .red-carpet {
       position: absolute; left: 50%; bottom: -8%;
       width: 58vmin; height: 78%;
-      transform: translateX(-50%) perspective(600px) rotateX(58deg);
+      transform: translateX(-50%) perspective(600px) rotateX(58deg) translateZ(0);
       background: repeating-linear-gradient(90deg, #6b0b14 0 18px, #8d121e 18px 36px);
-      box-shadow: 0 0 80px rgba(196,30,58,.35);
+      box-shadow: 0 0 50px rgba(196,30,58,.3);
       opacity: 0.55; pointer-events: none; z-index: 1;
+      will-change: transform;
     }
-    #fx, #fireworks { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+    #fx, #fireworks { position: absolute; inset: 0; z-index: 2; pointer-events: none; transform: translateZ(0); }
     .vignette {
       position: absolute; inset: 0; z-index: 3; pointer-events: none;
       background: radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,.72) 100%);
     }
     .spot {
-      position: absolute; width: 42vmax; height: 42vmax; border-radius: 50%;
-      pointer-events: none; z-index: 2; mix-blend-mode: screen; filter: blur(18px);
+      position: absolute; width: 40vmax; height: 40vmax; border-radius: 50%;
+      pointer-events: none; z-index: 2;
+      transform: translateZ(0);
+      will-change: transform;
     }
     .spot.a {
-      background: radial-gradient(circle, rgba(244,225,154,.28), transparent 62%);
-      animation: spotA 7s ease-in-out infinite;
+      top: -5%; left: -5%;
+      background: radial-gradient(circle, rgba(244,225,154,.24) 0%, rgba(244,225,154,.06) 42%, transparent 70%);
+      animation: spotA 14s ease-in-out infinite alternate;
     }
     .spot.b {
-      background: radial-gradient(circle, rgba(57,255,206,.12), transparent 62%);
-      animation: spotB 9s ease-in-out infinite;
+      bottom: -5%; right: -5%;
+      background: radial-gradient(circle, rgba(57,255,206,.14) 0%, rgba(57,255,206,.04) 42%, transparent 70%);
+      animation: spotB 16s ease-in-out infinite alternate;
     }
     @keyframes spotA {
-      0% { top: -10%; left: -8%; }
-      50% { top: 18%; left: 62%; }
-      100% { top: -10%; left: -8%; }
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(50vw, 22vh, 0); }
     }
     @keyframes spotB {
-      0% { bottom: -12%; right: -10%; }
-      50% { bottom: 22%; right: 55%; }
-      100% { bottom: -12%; right: -10%; }
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-45vw, -22vh, 0); }
     }
     .scan {
-      position: absolute; top: 0; width: 18vw; height: 100%; z-index: 2;
+      position: absolute; top: 0; left: 0; width: 18vw; height: 100%; z-index: 2;
       background: linear-gradient(90deg, transparent, rgba(244,225,154,.12), transparent);
-      animation: scan 5.5s linear infinite; pointer-events: none;
+      animation: scan 6s linear infinite; pointer-events: none;
+      will-change: transform;
+      transform: translate3d(-20vw, 0, 0);
     }
-    @keyframes scan { from { left: -20%; } to { left: 110%; } }
+    @keyframes scan {
+      0% { transform: translate3d(-20vw, 0, 0); }
+      100% { transform: translate3d(120vw, 0, 0); }
+    }
 
     #slides {
       position: relative; z-index: 5; width: 100%; height: 100%;
@@ -115,7 +128,7 @@
 
     .kicker {
       letter-spacing: .38em; text-transform: uppercase;
-      color: var(--gold); font-size: clamp(11px, 1.4vw, 14px);
+      color: var(--gold); font-size: clamp(14px, 1.6vw, 18px);
       font-weight: 700; margin-bottom: 12px;
     }
     h1, .display {
@@ -199,13 +212,33 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     .boy-meta .nickname { color: var(--neon); font-style: italic; margin: 6px 0 10px; }
+    .boy-meta {
+      display: flex; flex-direction: column; align-items: flex-start;
+      gap: 16px;
+    }
+    .boy-heading {
+      display: flex; flex-direction: column; align-items: flex-start;
+      gap: 16px;
+    }
+    .boy-meta .boy-award {
+      margin: 0; font-size: clamp(18px, 2.4vw, 26px);
+      letter-spacing: .24em; line-height: 1.2;
+    }
+    .boy-meta .boy-name {
+      margin: calc(3.18px + .133vw) 0 0;
+      line-height: 1.2;
+    }
+    .boy-heading .badge {
+      margin: clamp(-5.2px, calc(-5.8px + .153vw), -3.6px) 0 0;
+    }
     .badge {
       display: inline-block; padding: 6px 14px; border-radius: 999px;
       border: 1px solid var(--gold); color: var(--gold-bright);
-      letter-spacing: .12em; text-transform: uppercase; font-size: 12px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; font-size: 14px; font-weight: 700;
     }
     .bio { margin-top: 16px; line-height: 1.65; opacity: .9; font-size: 1.02rem; }
-    .stats { margin-top: 22px; display: grid; gap: 12px; }
+    .stats { width: 100%; margin-top: 0; display: grid; gap: 12px; }
+    .stat, .bar { width: 100%; }
     .stat label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; letter-spacing: .08em; }
     .bar {
       height: 12px; border-radius: 999px; background: rgba(255,255,255,.08);
@@ -239,22 +272,32 @@
       0%,100% { opacity: 0; transform: scale(.3); }
       50% { opacity: 1; transform: scale(1.4); }
     }
-    .teacher-photo {
-      width: 180px; height: 180px; border-radius: 50%; margin: 8px auto 16px;
-      border: 5px solid var(--gold); object-fit: cover;
-      box-shadow: 0 0 30px rgba(212,175,55,.55);
+    .teacher-award {
+      margin: 0 auto 18px; font-size: clamp(30px, 5.5vw, 58px);
+      line-height: 1.15;
     }
-    .teacher-photo.fallback { display: grid; place-items: center; font-size: 3.2rem; background: #1a1408; }
+    .teacher-cap { margin: 4px auto 12px; font-size: clamp(42px, 7vw, 72px); line-height: 1; }
+    .teacher-name {
+      margin: 0 auto; font-family: "Playfair Display", serif;
+      font-size: clamp(32px, 5.4vw, 60px); line-height: 1.2;
+    }
+    .teacher-subtitle {
+      margin: 14px 0 0; color: var(--gold); letter-spacing: .18em;
+      text-transform: uppercase; font-size: 13px;
+    }
 
     .envelope-scene { position: relative; min-height: 52vh; }
+    .king-header-crown { margin-bottom: 8px; font-size: clamp(42px, 7vw, 68px); line-height: 1; }
+    .king-award { margin-top: 8px; font-size: clamp(24px, 4vw, 38px); }
     .countdown {
       font-family: "Cinzel", serif; font-size: clamp(80px, 18vw, 180px);
       color: var(--gold-bright); text-shadow: 0 0 40px rgba(212,175,55,.8);
     }
     .envelope {
-      width: min(320px, 70vw); height: 210px; margin: 0 auto; position: relative;
+      width: min(320px, 70vw); height: 210px; margin: 190px auto 0; position: relative;
       transform-style: preserve-3d; perspective: 900px;
     }
+    .king-revealed .king-header-crown { visibility: hidden; }
     .env-body {
       position: absolute; inset: 40px 0 0; background: linear-gradient(#f4e19a, #c9a227);
       border-radius: 6px; box-shadow: 0 20px 40px rgba(0,0,0,.4);
@@ -300,6 +343,8 @@
       mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
       -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
       pointer-events: auto;
+      transform: translateZ(0);
+      will-change: transform;
     }
     .credits-crawl {
       position: absolute;
@@ -309,6 +354,8 @@
       text-align: center;
       will-change: transform;
       user-select: none;
+      transform: translateY(85vh);
+      opacity: 0;
     }
     .credits-crawl .kicker {
       font-size: clamp(18px, 2.5vw, 28px);
@@ -370,7 +417,15 @@
     .hud {
       position: absolute; z-index: 25; display: flex; gap: 8px; align-items: center;
     }
-    .hud.top-right { top: 16px; right: 16px; }
+    .hud.top-right { top: 16px; right: 16px; flex-direction: column; align-items: flex-end; }
+    .hud-items {
+      display: grid; justify-items: end; gap: 8px;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transform: translateY(-8px); transition: opacity .2s ease, transform .2s ease, visibility .2s;
+    }
+    .hud.open .hud-items {
+      opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
+    }
     .hud.bottom { bottom: 32px; left: 50%; transform: translateX(-50%); }
     button.ctrl {
       appearance: none; border: 1px solid rgba(212,175,55,.55);
@@ -390,10 +445,11 @@
       font-size: 12px; letter-spacing: .2em; color: var(--gold);
     }
     .cursor {
-      position: fixed; width: 18px; height: 18px; border: 2px solid var(--gold);
+      position: fixed; top: 0; left: 0; width: 18px; height: 18px; border: 2px solid var(--gold);
       border-radius: 50%; pointer-events: none; z-index: 80;
-      transform: translate(-50%, -50%); mix-blend-mode: difference;
-      transition: width .15s, height .15s;
+      transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+      box-shadow: 0 0 10px rgba(212,175,55,.6);
+      will-change: transform;
     }
 
     #gate {
@@ -408,6 +464,7 @@
 
     @media (max-width: 760px) {
       .boy-grid { grid-template-columns: 1fr; text-align: center; gap: 18px; }
+      .boy-meta, .boy-heading { align-items: center; }
       .stat label { font-size: 12px; }
       .hint { display: none; }
       .credits-wrap { height: 75vh; }
@@ -435,9 +492,13 @@
     <div id="slides"></div>
     <div class="progress"><i id="prog"></i></div>
     <div class="hud top-right">
-      <button class="ctrl" id="btnMusic" type="button">♪ Nhạc: Tắt</button>
-      <button class="ctrl" id="btnConfetti" type="button">✦ Pháo giấy</button>
-      <button class="ctrl" id="btnFull" type="button">⛶ Toàn màn hình</button>
+      <button class="ctrl" id="btnHudToggle" type="button" aria-expanded="false" aria-controls="hudItems" aria-label="Mở bảng điều khiển">☰</button>
+      <div class="hud-items" id="hudItems">
+        <button class="ctrl" id="btnPerf" type="button" title="Bật/Tắt chế độ siêu mượt cho máy nhẹ">⚡ Mượt: Bật</button>
+        <button class="ctrl" id="btnMusic" type="button">♪ Nhạc: Tắt</button>
+        <button class="ctrl" id="btnConfetti" type="button">✦ Pháo giấy</button>
+        <button class="ctrl" id="btnFull" type="button">⛶ Toàn màn hình</button>
+      </div>
     </div>
     <div class="hint">← → / Space / Click / Vuốt</div>
     <div class="curtains" id="curtains">
@@ -452,9 +513,7 @@
     </div>
   </div>
   <div class="cursor" id="cursor"></div>
-  <video id="bgMusic" loop playsinline preload="auto" style="position:absolute;width:0;height:0;opacity:0;pointer-events:none">
-    <source src="music file/So_In_Sync.mp4" type="video/mp4" />
-  </video>
+  <audio id="bgMusic" preload="auto"></audio>
 
   <script>
     /* =========================================================
@@ -463,7 +522,7 @@
     const DATA = {
       year: 2026,
       className: "1VBA25-1",
-      title: "Golden Men award 2026",
+      title: "Golden Men Award 2026",
       subtitle: "",
       agendaKicker: "Agenda",
       agendaTitle: "5 Golden paths",
@@ -572,14 +631,12 @@
           name: "Thầy Ngô Xuân Thuỷ",
           title: "Iconic Brain",
           subtitle: "Người giữ lửa tri thức",
-          photo: "boys/Ngô Xuân Thủy.jpg",
           tribute: ""
         },
         {
           name: "Thầy Hoàng Nam Hải",
           title: "Best EXP",
           subtitle: "Người truyền cảm hứng",
-          photo: "",
           tribute: ""
         }
       ],
@@ -593,7 +650,10 @@
       wishText: "Chúc mừng Boy’s Day các anh em! Cảm ơn mọi người vì luôn là những cộng sự tuyệt vời, nhiệt tình hỗ trợ chị em cả trong học tập lẫn công việc. Dù ai cũng bận rộn với công việc riêng, anh em vẫn luôn ga lăng, xông xáo gánh vác việc chung và giữ cho không khí lớp mình luôn vui vẻ, thoải mái. Chúc các chàng trai lớp mình luôn giữ vững phong độ, sức khỏe dồi dào, công việc thăng tiến và luôn đạt được những mục tiêu lớn của bản thân. Chúc anh em có một ngày Boy’s Day thật trọn vẹn và luôn tràn đầy năng lượng!",
       finale: "Happy Boy Days!",
       audio: {
-        music: "music file/So_In_Sync.mp4",
+        music: [
+          "music file/Nhạc Không Lời Sôi Động, Vui Tươi, Tạo Động Lực #19 [9tfNluBg-q4].mp3",
+          "music file/So_In_Sync.mp4"
+        ],
         fanfare: "",
         drum: "",
         applause: ""
@@ -612,6 +672,7 @@
     let musicOn = false;
     let creditsTimer = null;
     let creditsTween = null;
+    let perfMode = true;
     let enterGen = 0;
 
     const king = DATA.boys[DATA.king.boyIndex] || DATA.boys[0];
@@ -632,7 +693,7 @@
       const parts = [];
       parts.push(`
         <section class="slide" data-id="welcome">
-          <video class="slide-bg-video" id="slide1Bg" autoplay muted loop playsinline preload="auto">
+          <video class="slide-bg-video" id="slide1Bg" muted loop playsinline preload="auto">
             <source src="background/background_1.mp4" type="video/mp4" />
           </video>
           <div class="inner">
@@ -666,10 +727,12 @@
                   ${photoHTML(b.photo, b.name, "portrait")}
                 </div>
                 <div class="boy-meta">
-                  <p class="kicker">${b.award}</p>
-                  <h1 class="display gold-text glitch" style="font-size:clamp(28px,4.6vw,54px)">${b.name}</h1>
-                  ${b.nickname ? `<p class="nickname">${b.nickname}</p>` : ""}
-                  <span class="badge">${b.title}</span>
+                  <div class="boy-heading">
+                    <p class="kicker boy-award">${b.award}</p>
+                    <h1 class="display gold-text glitch boy-name" style="font-size:clamp(28px,4.6vw,54px)">${b.name}</h1>
+                    ${b.nickname ? `<p class="nickname">${b.nickname}</p>` : ""}
+                    <span class="badge">${b.title}</span>
+                  </div>
                   <div class="stats">
                     ${b.stats.map((st) => `
                       <div class="stat">
@@ -691,10 +754,10 @@
               <div class="gold-frame">
                 <div class="sparkle" data-sparkle></div>
                 <p class="kicker">Giải thưởng đặc biệt</p>
-                <h1 class="display gold-text bounce-in" style="font-size:clamp(22px,4vw,40px)">${t.title}</h1>
-                ${photoHTML(t.photo, t.name, "teacher-photo")}
-                <h2 class="neon" style="font-family:'Playfair Display',serif;font-size:clamp(26px,4.5vw,48px)">${t.name}</h2>
-                <p style="color:var(--gold);margin:8px 0 14px;letter-spacing:.18em;text-transform:uppercase;font-size:13px">${t.subtitle}</p>
+                <h1 class="display gold-text bounce-in teacher-award">${t.title}</h1>
+                <div class="teacher-cap" aria-hidden="true">🎓</div>
+                <h2 class="neon teacher-name">${t.name}</h2>
+                <p class="teacher-subtitle">${t.subtitle}</p>
                 ${t.tribute ? `<p class="bio">${t.tribute}</p>` : ""}
               </div>
             </div>
@@ -704,7 +767,7 @@
       parts.push(`
         <section class="slide" data-id="king">
           <div class="inner envelope-scene">
-            <p class="kicker">${DATA.king.award}</p>
+            <div class="king-header-crown" aria-hidden="true">👑</div>
             <div class="countdown" id="countEl"></div>
             <div class="envelope" id="envelope" hidden>
               <div class="env-flap" id="flap"></div>
@@ -717,7 +780,7 @@
                 ${photoHTML(DATA.king.photo || king.photo, king.name, "portrait")}
               </div>
               <h1 class="king-name gold-text glitch">${king.name}</h1>
-              <p class="neon" style="margin-top:8px">${DATA.king.award}</p>
+              <p class="neon king-award">${DATA.king.award}</p>
               <p class="bio">${DATA.king.tagline}</p>
             </div>
           </div>
@@ -778,14 +841,14 @@
       $("fireworks").width = innerWidth; $("fireworks").height = innerHeight;
     }
     function spawnParticles() {
-      particles = Array.from({ length: 90 }, () => ({
+      const count = perfMode ? 35 : 85;
+      particles = Array.from({ length: count }, () => ({
         x: Math.random() * innerWidth,
         y: Math.random() * innerHeight,
-        r: Math.random() * 1.8 + 0.4,
-        s: Math.random() * 0.45 + 0.1,
-        a: Math.random(),
+        r: Math.random() * 1.6 + 0.4,
+        s: Math.random() * 0.42 + 0.1,
         tw: Math.random() * Math.PI * 2,
-        gold: Math.random() > 0.55
+        gold: Math.random() > 0.52
       }));
     }
     function tickParticles() {
@@ -805,51 +868,127 @@
     const fw = $("fireworks");
     const fwc = fw.getContext("2d");
     let sparks = [];
-    function boom(x, y) {
+    let fwActive = false;
+    let fireworksTimer = null;
+    let fireworksFrame = null;
+    let fireworksFollowups = [];
+
+    function boom(x, y, particleCount) {
       const hue = Math.random() > 0.5 ? 45 : 350;
-      for (let i = 0; i < 42; i++) {
-        const a = (Math.PI * 2 * i) / 42;
+      const count = particleCount || (perfMode ? 26 : 42);
+      for (let i = 0; i < count; i++) {
+        const a = (Math.PI * 2 * i) / count;
         const sp = Math.random() * 4.2 + 1.2;
         sparks.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 1, hue });
       }
+      if (!fwActive) {
+        fwActive = true;
+        fireworksFrame = requestAnimationFrame(tickFireworks);
+      }
     }
     function tickFireworks() {
+      if (sparks.length === 0) {
+        fwc.clearRect(0, 0, fw.width, fw.height);
+        fwActive = false;
+        fireworksFrame = null;
+        return;
+      }
       fwc.clearRect(0, 0, fw.width, fw.height);
       sparks = sparks.filter(s => s.life > 0);
       for (const s of sparks) {
-        s.x += s.vx; s.y += s.vy; s.vy += 0.04; s.life -= 0.012;
+        s.x += s.vx; s.y += s.vy; s.vy += 0.04; s.life -= 0.014;
         fwc.globalAlpha = Math.max(s.life, 0);
         fwc.fillStyle = s.hue > 100 ? "#39ffce" : `hsl(${s.hue},90%,60%)`;
-        fwc.beginPath(); fwc.arc(s.x, s.y, 2.2, 0, Math.PI * 2); fwc.fill();
+        fwc.beginPath(); fwc.arc(s.x, s.y, 2, 0, Math.PI * 2); fwc.fill();
       }
       fwc.globalAlpha = 1;
-      requestAnimationFrame(tickFireworks);
+      fireworksFrame = requestAnimationFrame(tickFireworks);
     }
-    function fireworksShow(ms = 3200) {
-      const t0 = performance.now();
-      const iv = setInterval(() => {
+    function clearFireworksTimers() {
+      clearInterval(fireworksTimer);
+      fireworksTimer = null;
+      fireworksFollowups.forEach(clearTimeout);
+      fireworksFollowups = [];
+    }
+    function stopFireworks() {
+      clearFireworksTimers();
+      sparks = [];
+      if (fireworksFrame !== null) cancelAnimationFrame(fireworksFrame);
+      fireworksFrame = null;
+      fwActive = false;
+      fwc.clearRect(0, 0, fw.width, fw.height);
+    }
+    function fireworksShow(ms = 3200, intervalOverride) {
+      stopFireworks();
+      const interval = intervalOverride || (perfMode ? 350 : 280);
+      const endAt = performance.now() + ms;
+      boom(innerWidth * (0.2 + Math.random() * 0.6), innerHeight * (0.15 + Math.random() * 0.35));
+      fireworksTimer = setInterval(() => {
+        if (performance.now() >= endAt) {
+          clearInterval(fireworksTimer);
+          fireworksTimer = null;
+          return;
+        }
         boom(innerWidth * (0.2 + Math.random() * 0.6), innerHeight * (0.15 + Math.random() * 0.35));
-        if (performance.now() - t0 > ms) clearInterval(iv);
-      }, 280);
+      }, interval);
+    }
+    function finaleFireworksShow(ms = 120000) {
+      stopFireworks();
+      const endAt = performance.now() + ms;
+      const launchCycle = () => {
+        if (performance.now() >= endAt) {
+          clearFireworksTimers();
+          return;
+        }
+        const x = innerWidth * (0.15 + Math.random() * 0.7);
+        const y = innerHeight * (0.12 + Math.random() * 0.4);
+        boom(x, y, perfMode ? 52 : 72);
+        burstConfetti({
+          particleCount: perfMode ? 42 : 64,
+          spread: 100,
+          startVelocity: 48,
+          origin: { x, y: Math.min(0.7, y + 0.2) }
+        });
+        for (let i = 0; i < 3; i++) {
+          const timer = setTimeout(() => {
+            if (performance.now() >= endAt) return;
+            const smallX = Math.max(20, Math.min(innerWidth - 20, x + (Math.random() - 0.5) * 180));
+            const smallY = Math.max(20, Math.min(innerHeight - 20, y + (Math.random() - 0.5) * 100));
+            boom(smallX, smallY, perfMode ? 18 : 24);
+            if (i === 1) {
+              burstConfetti({
+                particleCount: perfMode ? 16 : 24,
+                spread: 70,
+                startVelocity: 38,
+                origin: { x: smallX / innerWidth, y: Math.min(0.75, smallY / innerHeight + 0.15) }
+              });
+            }
+          }, (i + 1) * 120);
+          fireworksFollowups.push(timer);
+        }
+      };
+      launchCycle();
+      fireworksTimer = setInterval(launchCycle, 600);
     }
 
     function spawnFloaters(kind) {
       const box = $("floaters");
       const glyphs = kind === "love" ? ["❤", "🌸", "💐", "✨", "💖"] : ["🎈", "💛", "✨"];
-      for (let i = 0; i < 18; i++) {
+      const count = perfMode ? 8 : 16;
+      for (let i = 0; i < count; i++) {
         const el = document.createElement("span");
         el.className = "floater";
         el.textContent = glyphs[i % glyphs.length];
         el.style.left = Math.random() * 100 + "%";
         el.style.animationDuration = 5 + Math.random() * 5 + "s";
-        el.style.fontSize = 18 + Math.random() * 22 + "px";
+        el.style.fontSize = 18 + Math.random() * 20 + "px";
         box.appendChild(el);
-        setTimeout(() => el.remove(), 11000);
+        setTimeout(() => el.remove(), 10000);
       }
     }
 
     /* Audio */
-    let actx, master, musicEl, loops = {};
+    let actx, master, musicEl, musicTrackIndex = 0, loops = {};
     function audioCtx() {
       if (!actx) {
         actx = new (window.AudioContext || window.webkitAudioContext)();
@@ -893,16 +1032,35 @@
       src.start(); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.8);
       src.stop(ctx.currentTime + 1.9);
     }
+    function playMusicTrack() {
+      const tracks = DATA.audio.music;
+      const src = tracks[musicTrackIndex];
+      musicEl.src = encodeURI(src).replace(/#/g, "%23");
+      musicEl.load();
+      const play = musicEl.play();
+      if (play && play.catch) {
+        play.catch(error => console.error("Unable to play the selected music track.", error));
+      }
+    }
     function startMusic() {
       audioCtx();
-      if (DATA.audio.music) {
+      if (DATA.audio.music.length) {
         if (!musicEl) {
-          musicEl = $("bgMusic") || new Audio(encodeURI(DATA.audio.music));
-          musicEl.loop = true;
+          musicEl = $("bgMusic");
           musicEl.volume = 0.55;
+          musicEl.addEventListener("ended", () => {
+            if (!musicOn) return;
+            musicTrackIndex = (musicTrackIndex + 1) % DATA.audio.music.length;
+            playMusicTrack();
+          });
+          musicTrackIndex = 0;
+          playMusicTrack();
+        } else {
+          const play = musicEl.play();
+          if (play && play.catch) {
+            play.catch(error => console.error("Unable to resume music playback.", error));
+          }
         }
-        const play = musicEl.play();
-        if (play && play.catch) play.catch(() => {});
       } else {
         const ctx = audioCtx();
         if (loops.pad) return;
@@ -924,29 +1082,38 @@
     function leave(el, name, dir) {
       if (window.gsap) {
         const map = {
-          fade: { opacity: 0, duration: 0.45 },
-          slide: { x: dir * -120, opacity: 0, duration: 0.55 },
-          zoom: { scale: 1.25, opacity: 0, duration: 0.5 },
-          spin3d: { rotateY: dir * 80, opacity: 0, duration: 0.6 },
-          wipe: { y: dir * 80, opacity: 0, duration: 0.5 },
+          fade: { opacity: 0, duration: 0.4 },
+          slide: { x: dir * -100, opacity: 0, duration: 0.45 },
+          zoom: { scale: 1.15, opacity: 0, duration: 0.4 },
+          spin3d: { rotateY: dir * 60, opacity: 0, duration: 0.5 },
+          wipe: { y: dir * 60, opacity: 0, duration: 0.4 },
           curtain: { opacity: 0, duration: 0.2 }
         };
-        return gsap.to(el, { ...map[name], ease: "power2.in" });
+        return gsap.to(el, {
+          ...map[name],
+          ease: "power2.in",
+          onComplete: () => {
+            el.classList.remove("active");
+            gsap.set(el, { clearProps: "all" });
+          }
+        });
       }
+      el.classList.remove("active");
       el.style.opacity = 0;
     }
     function enter(el, name, dir) {
+      el.classList.add("active");
       if (window.gsap) {
         const from = {
           fade: { opacity: 0 },
-          slide: { x: dir * 120, opacity: 0 },
-          zoom: { scale: 0.82, opacity: 0 },
-          spin3d: { rotateY: dir * -80, opacity: 0 },
-          wipe: { y: dir * -80, opacity: 0 },
+          slide: { x: dir * 100, opacity: 0 },
+          zoom: { scale: 0.88, opacity: 0 },
+          spin3d: { rotateY: dir * -60, opacity: 0 },
+          wipe: { y: dir * -60, opacity: 0 },
           curtain: { opacity: 0 }
         };
         gsap.set(el, from[name] || { opacity: 0 });
-        return gsap.to(el, { x: 0, y: 0, rotateY: 0, scale: 1, opacity: 1, duration: 0.7, ease: "power3.out" });
+        return gsap.to(el, { x: 0, y: 0, rotateY: 0, scale: 1, opacity: 1, duration: 0.5, ease: "power2.out" });
       }
       el.style.opacity = 1;
     }
@@ -959,15 +1126,32 @@
       const next = list[to];
       const name = TRANSITIONS[to % TRANSITIONS.length];
 
+      // Stop any residual shake or flash from previous slide
+      $("app").classList.remove("shake");
+      $("flash").classList.remove("go");
+
+      // Stop bursts when leaving a slide that starts a fireworks show.
+      if (prev && ["king", "finale"].includes(prev.dataset.id)) {
+        stopFireworks();
+      }
+
+      // Pre-position credits crawl at the bottom so it never flashes at the center
+      if (next && next.dataset.id === "credits") {
+        const crawl = $("creditsCrawl");
+        const wrap = $("creditsWrap");
+        if (crawl && wrap) {
+          const wrapH = wrap.clientHeight || (window.innerHeight * 0.8);
+          gsap.set(crawl, { y: wrapH, opacity: 1 });
+        }
+      }
+
       if (name === "curtain") {
         $("curtains").classList.remove("open");
         await wait(700);
       }
 
-      prev.classList.remove("active");
       leave(prev, name, dir);
       index = to;
-      next.classList.add("active");
       enter(next, name, dir);
       updateHud();
 
@@ -976,8 +1160,8 @@
         $("curtains").classList.add("open");
       }
 
-      await wait(200);
       playEnter(next);
+      await wait(500);
       locked = false;
     }
 
@@ -995,6 +1179,14 @@
         creditsTween = null;
       }
       const id = slide.dataset.id;
+      const bg = $("slide1Bg");
+      if (bg) {
+        if (id === "welcome") {
+          bg.play().catch(() => {});
+        } else {
+          bg.pause();
+        }
+      }
       if (slide.dataset.flash) {
         cameraFlash();
         playHook("applause", applauseSynth);
@@ -1047,6 +1239,7 @@
 
     async function animateKing(slide) {
       const gen = enterGen;
+      slide.classList.remove("king-revealed");
       const countEl = $("countEl");
       const env = $("envelope");
       const reveal = $("kingReveal");
@@ -1074,6 +1267,7 @@
       if (gen !== enterGen) return;
       env.hidden = true;
       reveal.hidden = false;
+      slide.classList.add("king-revealed");
       shake();
       cameraFlash();
       burstConfetti({ particleCount: 220, spread: 120 });
@@ -1101,14 +1295,14 @@
 
         if (window.gsap) {
           const wrapH = wrap.clientHeight || (window.innerHeight * 0.8);
-          const crawlH = crawl.offsetHeight || 380;
+          const crawlH = crawl.scrollHeight || crawl.offsetHeight || 380;
           gsap.set(crawl, { y: wrapH, opacity: 1 });
 
-          const totalDistance = wrapH + crawlH + 30;
+          const totalDistance = wrapH + crawlH + 40;
           const duration = Math.max(20, totalDistance / 38);
 
           creditsTween = gsap.to(crawl, {
-            y: -crawlH - 30,
+            y: -crawlH - 40,
             duration: duration,
             ease: "none",
             repeat: -1,
@@ -1131,24 +1325,43 @@
     function animateFinale() {
       spawnFloaters("love");
       burstConfetti({ particleCount: 260, spread: 160 });
-      fireworksShow(3500);
+      finaleFireworksShow(120000);
       playHook("fanfare", fanfareSynth);
     }
 
     function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-    /* Parallax */
+    /* Parallax & Cursor throttled with rAF */
+    let mousePos = { x: -100, y: -100 };
+    let mouseTicking = false;
+    const cursorEl = $("cursor");
+
     document.addEventListener("mousemove", (e) => {
-      const c = $("cursor");
-      c.style.left = e.clientX + "px"; c.style.top = e.clientY + "px";
-      const active = slides()[index];
-      if (!active) return;
-      const p = active.querySelector("[data-parallax]");
-      if (!p) return;
-      const dx = (e.clientX / innerWidth - 0.5) * 16;
-      const dy = (e.clientY / innerHeight - 0.5) * 12;
-      p.style.transform = `rotateY(${dx}deg) rotateX(${-dy}deg) translateZ(12px)`;
-    });
+      mousePos.x = e.clientX;
+      mousePos.y = e.clientY;
+      if (!mouseTicking) {
+        mouseTicking = true;
+        requestAnimationFrame(updateMouse);
+      }
+    }, { passive: true });
+
+    function updateMouse() {
+      if (cursorEl) {
+        cursorEl.style.transform = `translate3d(${mousePos.x}px, ${mousePos.y}px, 0) translate(-50%, -50%)`;
+      }
+      if (!perfMode) {
+        const activeSlide = slidesEl.children[index];
+        if (activeSlide) {
+          const p = activeSlide.querySelector("[data-parallax]");
+          if (p) {
+            const dx = (mousePos.x / innerWidth - 0.5) * 14;
+            const dy = (mousePos.y / innerHeight - 0.5) * 10;
+            p.style.transform = `rotateY(${dx}deg) rotateX(${-dy}deg) translateZ(12px)`;
+          }
+        }
+      }
+      mouseTicking = false;
+    }
 
     /* Sparkles in gold frames */
     function fillSparkles() {
@@ -1188,6 +1401,17 @@
       pointerStart = null;
     });
 
+    $("btnHudToggle").addEventListener("click", () => {
+      const open = $("btnHudToggle").getAttribute("aria-expanded") !== "true";
+      $("btnHudToggle").setAttribute("aria-expanded", String(open));
+      $("btnHudToggle").setAttribute("aria-label", open ? "Đóng bảng điều khiển" : "Mở bảng điều khiển");
+      document.querySelector(".hud.top-right").classList.toggle("open", open);
+    });
+    $("btnPerf").addEventListener("click", () => {
+      perfMode = !perfMode;
+      $("btnPerf").textContent = perfMode ? "⚡ Mượt: Bật" : "⚡ Mượt: Tắt";
+      spawnParticles();
+    });
     $("btnConfetti").addEventListener("click", () => burstConfetti());
     $("btnMusic").addEventListener("click", () => musicOn ? stopMusic() : startMusic());
     $("btnFull").addEventListener("click", () => {
@@ -1212,7 +1436,6 @@
     resizeFx();
     spawnParticles();
     tickParticles();
-    tickFireworks();
     updateHud();
   </script>
 </body>
